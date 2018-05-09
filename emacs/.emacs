@@ -1,7 +1,7 @@
 ;; packages archives
 ;; set to tsinghua
 (require 'package)
-(setq package-list '(phi-search cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company))
+(setq package-list '(cnfonts autopair phi-search cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company))
 
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
@@ -26,7 +26,7 @@
  '(font-use-system-font t)
  '(package-selected-packages
    (quote
-    (cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company)))
+    (autopair cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company)))
  '(scalable-fonts-allowed t)
  '(tex-dvi-view-command
    (quote
@@ -93,8 +93,21 @@
 (setq inhibit-startup-screen t
       initial-buffer-choice  nil)
 
+
 ;; highlight
 (global-highlight-parentheses-mode t)
+(autopair-global-mode)
+(setq autopair-autowrap t)
+
+(add-hook 'highlight-parentheses-mode-hook
+          '(lambda ()
+             (setq autopair-handle-action-fns
+                   (append
+					(if autopair-handle-action-fns
+						autopair-handle-action-fns
+					  '(autopair-default-handle-action))
+					'((lambda (action pair pos-before)
+						(hl-paren-color-update)))))))
 
 ;; scroll
 (setq scroll-step 1)
@@ -116,8 +129,11 @@
 (global-set-key (kbd "C-c n") 'create-scratch-buffer)
 
 ;; yasnippet
-;;(require 'yasnippet)
-;;(yas-global-mode 1)
+(require 'yasnippet)
+(yas-global-mode 1)
+
+(require 'cnfonts)
+(cnfonts-enable)
 
 ;;(eval-after-load "python"
 ;;  '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
