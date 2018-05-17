@@ -26,7 +26,10 @@
  '(font-use-system-font t)
  '(package-selected-packages
    (quote
-    (autopair cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company)))
+    (company-c-headers helm-projectile helm-fuzzy-find sr-speedbar autopair cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company)))
+ '(safe-local-variable-values
+   (quote
+    ((company-clang-arguments "-I/home/yao/Code/cxx/gd"))))
  '(scalable-fonts-allowed t)
  '(tex-dvi-view-command
    (quote
@@ -56,6 +59,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'global-linum-mode)
 (add-to-list 'company-backends 'company-jedi)
+(add-to-list 'company-backends 'company-c-headers)
+
 
  ;; (add-to-list 'auto-mode-alist '("\\.py\\'" . elpy-mode))
  ;; (add-hook 'python-mode-hook 'elpy-mode)
@@ -83,8 +88,12 @@
 ;; multiple-cursors
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-.") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-,") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C->") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-<") 'mc/skip-to-previous-like-this)
+
+
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (require 'phi-search)
 (global-set-key (kbd "C-s") 'phi-search)
@@ -141,3 +150,28 @@
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
+(put 'upcase-region 'disabled nil)
+
+;; helm
+(require 'helm)
+
+(require 'helm-config)
+
+(setq helm-M-x-fuzzy-match t)
+(setq helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t)
+
+(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t)
+
+
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-set-key (kbd "C-c h o") 'helm-occur)
