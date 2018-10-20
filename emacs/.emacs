@@ -1,7 +1,7 @@
 ;; packages archives
 ;; set to tsinghua
 (require 'package)
-(setq package-list '(cnfonts autopair phi-search cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company))
+(setq package-list '(cnfonts autopair phi-search cmake-mode markdown-mode neotree git helm jedi-direx yasnippet-snippets web-server highlight-parentheses multiple-cursors company-jedi python-mode nyan-mode company company-c-headers))
 
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
@@ -56,6 +56,7 @@
 
 ;; company-mode
 (require 'company)
+(setq company-idle-delay 0)
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'after-init-hook 'global-linum-mode)
 (add-to-list 'company-backends 'company-jedi)
@@ -148,7 +149,7 @@
 ;;  '(define-key python-mode-map "\C-cx" 'jedi-direx:pop-to-buffer))
 ;;(add-hook 'jedi-mode-hook 'jedi-direx:setup)
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+(global-set-key [f9] 'neotree-toggle)
 
 (put 'upcase-region 'disabled nil)
 
